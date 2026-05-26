@@ -109,6 +109,7 @@ def render_encode_page() -> None:
                 "Content",
                 placeholder="https://example.com or any text",
                 height=160,
+                key="qr_content",
             )
 
             with st.popover("QR settings", width="stretch"):
@@ -123,16 +124,24 @@ def render_encode_page() -> None:
                 fill_color = color_cols[0].color_picker("Foreground", "#111827")
                 back_color = color_cols[1].color_picker("Background", "#ffffff")
 
+            if st.button("Generate QR code", type="primary", width="stretch"):
+                if content.strip():
+                    st.session_state.generated_qr_content = content.strip()
+                else:
+                    st.session_state.pop("generated_qr_content", None)
+
             st.caption(f"{len(content.strip())} character(s) ready to encode.")
 
     with right:
         with st.container(border=True, horizontal_alignment="center"):
-            if not content.strip():
-                st.info("Type something to generate a QR code.")
+            generated_content = st.session_state.get("generated_qr_content", "")
+
+            if not generated_content:
+                st.info("Type something, then tap **Generate QR code**.")
                 st.stop()
 
             image = make_qr_image(
-                content.strip(),
+                generated_content,
                 box_size=box_size,
                 border=border,
                 error_correction=ERROR_LEVELS[error_label],

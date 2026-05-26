@@ -22,6 +22,7 @@ Open the URL shown in the terminal (usually http://localhost:8501).
 
 **Create QR code**
 - Encode any text or URL
+- Tap **Generate QR code** after entering content, including on mobile keyboards
 - Adjust module size, quiet zone, and error correction from the settings popover
 - Customize foreground and background colors
 - Preview and download as PNG
